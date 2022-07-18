@@ -1,4 +1,4 @@
-name: develop ci
+name: develop branch ci
 
 on:
   pull_request:
