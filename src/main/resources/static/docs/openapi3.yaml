@@ -1,0 +1,194 @@
+openapi: 3.0.1
+info:
+  title: RestDocs to Swagger 변환 테스트
+  description: Restdocs로 API 문서 작성 후 이를 Swagger로 변환하는 페이지
+  version: 0.0.1-SNAPSHOT
+servers:
+- url: http://localhost:8080
+tags: []
+paths:
+  /user:
+    get:
+      tags:
+      - 테스트
+      summary: Get 테스트
+      description: Get 테스트
+      operationId: test-get
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MainResponse.Get'
+              examples:
+                test-get:
+                  value: |-
+                    {
+                      "message" : "get test success"
+                    }
+    post:
+      tags:
+      - 테스트
+      summary: Post 테스트
+      description: Post 테스트
+      operationId: test-post
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/MainRequest.Post'
+            examples:
+              test-post:
+                value: |-
+                  {
+                    "message" : "post request"
+                  }
+      responses:
+        "201":
+          description: "201"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MainResponse.Post'
+              examples:
+                test-post:
+                  value: |-
+                    {
+                      "id" : 1
+                    }
+  /user/{id}:
+    put:
+      tags:
+      - 테스트
+      summary: Put 테스트
+      description: Put 테스트
+      operationId: test-put
+      parameters:
+      - name: id
+        in: path
+        description: 수정 ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/MainRequest.Put'
+            examples:
+              test-put:
+                value: |-
+                  {
+                    "message" : "put request"
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MainResponse.Put'
+              examples:
+                test-put:
+                  value: |-
+                    {
+                      "message" : "put test success"
+                    }
+    delete:
+      tags:
+      - 테스트
+      summary: Delete 테스트
+      description: Delete 테스트
+      operationId: test-delete
+      parameters:
+      - name: id
+        in: path
+        description: 삭제 ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+    patch:
+      tags:
+      - 테스트
+      summary: Patch 테스트
+      description: Patch 테스트
+      operationId: test-patch
+      parameters:
+      - name: id
+        in: path
+        description: 수정 ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/MainRequest.Patch'
+            examples:
+              test-patch:
+                value: |-
+                  {
+                    "message" : "patch request"
+                  }
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MainResponse.Post'
+              examples:
+                test-patch:
+                  value: |-
+                    {
+                      "message" : "patch test success"
+                    }
+components:
+  schemas:
+    MainResponse.Post:
+      title: MainResponse.Post
+      type: object
+      properties:
+        message:
+          type: string
+          description: 응답 메세지
+    MainRequest.Post:
+      title: MainRequest.Post
+      type: object
+      properties:
+        message:
+          type: string
+          description: 요청 메시지
+    MainResponse.Put:
+      title: MainResponse.Put
+      type: object
+      properties:
+        message:
+          type: string
+          description: 응답 메세지
+    MainRequest.Patch:
+      title: MainRequest.Patch
+      type: object
+      properties:
+        message:
+          type: string
+          description: 요청 메세지
+    MainRequest.Put:
+      title: MainRequest.Put
+      type: object
+      properties:
+        message:
+          type: string
+          description: 요청 메세지
+    MainResponse.Get:
+      title: MainResponse.Get
+      type: object
+      properties:
+        message:
+          type: string
+          description: 메세지
