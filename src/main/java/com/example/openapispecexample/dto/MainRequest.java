@@ -1,6 +1,6 @@
 package com.example.openapispecexample.dto;
 
-public class MainRequest {
+public interface MainRequest {
 
 
     public record Post(String message) {
