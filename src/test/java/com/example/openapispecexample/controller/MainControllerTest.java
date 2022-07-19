@@ -105,6 +105,7 @@ class MainControllerTest {
     void putTest() throws Exception {
         Long requestId = 1L;
         MainRequest.Put requestBody = new Put("put request");
+        MainResponse.Put response = new MainResponse.Put("put test success");
 
         mockMvc.perform(
                 RestDocumentationRequestBuilders.put("/user/{id}", requestId)
@@ -131,7 +132,8 @@ class MainControllerTest {
                 responseFields(
                     fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메세지")
                 )
-            ));
+            ))
+            .andExpect(jsonPath("$.message").value(response.message()));
     }
 
     @Test
@@ -139,6 +141,7 @@ class MainControllerTest {
     void patchTest() throws Exception {
         Long requestId = 1L;
         MainRequest.Patch requestBody = new Patch("patch request");
+        MainResponse.Patch response = new MainResponse.Patch("patch test success");
 
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/user/{id}", requestId)
@@ -165,7 +168,8 @@ class MainControllerTest {
                 responseFields(
                     fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메세지")
                 )
-            ));
+            ))
+            .andExpect(jsonPath("$.message").value(response.message()));
     }
 
     @Test
