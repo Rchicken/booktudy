@@ -32,17 +32,7 @@ jobs:
           restore-keys: ${{ runner.os }}-sonar
 
       - name: Execute Gradle build and analyze
-        run: ./gradlew copyTest build sonarqube --info
+        run: ./gradlew copyTest build sonarqube
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-      - name: Add coverage to PR
-        id: jacoco
-        uses: madrapps/jacoco-report@v1.2
-        with:
-          paths: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          title: "테스트 커버리지 측정"
-          min-coverage-overall: 60
-          min-coverage-changed-files: 60
