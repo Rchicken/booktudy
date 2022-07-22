@@ -32,7 +32,7 @@ jobs:
           restore-keys: ${{ runner.os }}-sonar
 
       - name: Execute Gradle build and analyze
-        run: ./gradlew copyTest build sonarqube
+        run: ./gradlew test sonarqube jib
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
