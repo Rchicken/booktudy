@@ -1,4 +1,4 @@
-name: deploy
+name: jenkins deploy
 
 on:
   push:
