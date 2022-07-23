@@ -1,4 +1,4 @@
-name: main branch ci/cd
+name: deploy
 on:
   push:
     branches:
@@ -38,7 +38,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Execute Gradle build and analyze
-        run: ./gradlew test sonarqube jib
+        run: ./gradlew jib
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
