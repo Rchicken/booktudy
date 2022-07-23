@@ -1,6 +1,6 @@
 package com.example.openapispecexample.dto;
 
-public class MainResponse {
+public interface MainResponse {
 
     public record Get(String message) {
 

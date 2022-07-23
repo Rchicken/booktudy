@@ -1,5 +1,6 @@
 package com.example.openapispecexample.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -8,15 +9,19 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
+import com.example.openapispecexample.OpenApiSpecExampleApplication;
 import com.example.openapispecexample.dto.MainRequest;
 import com.example.openapispecexample.dto.MainRequest.Patch;
 import com.example.openapispecexample.dto.MainRequest.Post;
 import com.example.openapispecexample.dto.MainRequest.Put;
+import com.example.openapispecexample.dto.MainResponse;
+import com.example.openapispecexample.dto.MainResponse.Get;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,6 +33,7 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 @WebMvcTest(MainController.class)
 @AutoConfigureMockMvc
@@ -42,6 +48,7 @@ class MainControllerTest {
     @Test
     @DisplayName("Get 테스트")
     void getTest() throws Exception {
+        MainResponse.Get response = new Get("get test success");
         mockMvc.perform(
                 RestDocumentationRequestBuilders.get("/user")
             )
@@ -52,13 +59,14 @@ class MainControllerTest {
                     .summary("Get 테스트")
                     .description("Get 테스트")
                     .responseSchema(Schema.schema("MainResponse.Get"))
-                    ,
+                ,
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 responseFields(
                     fieldWithPath("message").type(JsonFieldType.STRING).description("메세지")
                 )
-            ));
+            ))
+            .andExpect(jsonPath("$.message").value(response.message()));
 
     }
 
@@ -66,6 +74,7 @@ class MainControllerTest {
     @DisplayName("Post 테스트")
     void postTest() throws Exception {
         MainRequest.Post request = new Post("post request");
+        MainResponse.Post response = new MainResponse.Post(1L);
         mockMvc.perform(
                 RestDocumentationRequestBuilders.post("/user")
                     .contentType(MediaType.APPLICATION_JSON)
@@ -87,7 +96,8 @@ class MainControllerTest {
                 ),
                 responseFields(
                     fieldWithPath("id").type(JsonFieldType.NUMBER).description("생성 ID")
-                )));
+                )))
+            .andExpect(jsonPath("$.id").value(response.id()));
     }
 
     @Test
@@ -95,6 +105,7 @@ class MainControllerTest {
     void putTest() throws Exception {
         Long requestId = 1L;
         MainRequest.Put requestBody = new Put("put request");
+        MainResponse.Put response = new MainResponse.Put("put test success");
 
         mockMvc.perform(
                 RestDocumentationRequestBuilders.put("/user/{id}", requestId)
@@ -121,7 +132,8 @@ class MainControllerTest {
                 responseFields(
                     fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메세지")
                 )
-            ));
+            ))
+            .andExpect(jsonPath("$.message").value(response.message()));
     }
 
     @Test
@@ -129,6 +141,7 @@ class MainControllerTest {
     void patchTest() throws Exception {
         Long requestId = 1L;
         MainRequest.Patch requestBody = new Patch("patch request");
+        MainResponse.Patch response = new MainResponse.Patch("patch test success");
 
         mockMvc.perform(
                 RestDocumentationRequestBuilders.patch("/user/{id}", requestId)
@@ -155,7 +168,8 @@ class MainControllerTest {
                 responseFields(
                     fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메세지")
                 )
-            ));
+            ))
+            .andExpect(jsonPath("$.message").value(response.message()));
     }
 
     @Test
@@ -180,4 +194,7 @@ class MainControllerTest {
                 )
             ));
     }
+
+
 }
+
