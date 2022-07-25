@@ -4,6 +4,7 @@ import com.example.openapispecexample.dto.MainRequest;
 import com.example.openapispecexample.dto.MainResponse;
 import com.example.openapispecexample.dto.MainResponse.Post;
 import java.net.URI;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/user")
 public class MainController {
 
+    @Value("${spring.profiles.active:}")
+    private String profile;
 
     @GetMapping
     public ResponseEntity<MainResponse.Get> get() {
@@ -58,5 +61,10 @@ public class MainController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<String> getProfile() {
+        return ResponseEntity.ok(profile);
     }
 }
