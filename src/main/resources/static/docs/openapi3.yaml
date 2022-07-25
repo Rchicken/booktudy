@@ -23,10 +23,7 @@ paths:
                 $ref: '#/components/schemas/MainResponse.Get'
               examples:
                 test-get:
-                  value: |-
-                    {
-                      "message" : "get test success"
-                    }
+                  value: "{\r\n  \"message\" : \"get test success\"\r\n}"
     post:
       tags:
       - 테스트
@@ -40,10 +37,7 @@ paths:
               $ref: '#/components/schemas/MainRequest.Post'
             examples:
               test-post:
-                value: |-
-                  {
-                    "message" : "post request"
-                  }
+                value: "{\r\n  \"message\" : \"post request\"\r\n}"
       responses:
         "201":
           description: "201"
@@ -53,10 +47,7 @@ paths:
                 $ref: '#/components/schemas/MainResponse.Post'
               examples:
                 test-post:
-                  value: |-
-                    {
-                      "id" : 1
-                    }
+                  value: "{\r\n  \"id\" : 1\r\n}"
   /user/{id}:
     put:
       tags:
@@ -78,10 +69,7 @@ paths:
               $ref: '#/components/schemas/MainRequest.Put'
             examples:
               test-put:
-                value: |-
-                  {
-                    "message" : "put request"
-                  }
+                value: "{\r\n  \"message\" : \"put request\"\r\n}"
       responses:
         "200":
           description: "200"
@@ -91,10 +79,7 @@ paths:
                 $ref: '#/components/schemas/MainResponse.Put'
               examples:
                 test-put:
-                  value: |-
-                    {
-                      "message" : "put test success"
-                    }
+                  value: "{\r\n  \"message\" : \"put test success\"\r\n}"
     delete:
       tags:
       - 테스트
@@ -131,10 +116,7 @@ paths:
               $ref: '#/components/schemas/MainRequest.Patch'
             examples:
               test-patch:
-                value: |-
-                  {
-                    "message" : "patch request"
-                  }
+                value: "{\r\n  \"message\" : \"patch request\"\r\n}"
       responses:
         "200":
           description: "200"
@@ -144,14 +126,18 @@ paths:
                 $ref: '#/components/schemas/MainResponse.Post'
               examples:
                 test-patch:
-                  value: |-
-                    {
-                      "message" : "patch test success"
-                    }
+                  value: "{\r\n  \"message\" : \"patch test success\"\r\n}"
 components:
   schemas:
     MainResponse.Post:
       title: MainResponse.Post
+      type: object
+      properties:
+        message:
+          type: string
+          description: 응답 메세지
+    MainResponse.Put:
+      title: MainResponse.Put
       type: object
       properties:
         message:
@@ -164,13 +150,6 @@ components:
         message:
           type: string
           description: 요청 메시지
-    MainResponse.Put:
-      title: MainResponse.Put
-      type: object
-      properties:
-        message:
-          type: string
-          description: 응답 메세지
     MainRequest.Patch:
       title: MainRequest.Patch
       type: object
