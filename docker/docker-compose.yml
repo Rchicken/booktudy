@@ -1,0 +1,45 @@
+version: "3.1"
+
+networks:
+  backend:
+    driver: bridge
+
+services:
+  web-server:
+    image: zxcv9203/nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d/
+    networks:
+      - backend
+    depends_on:
+      - server1
+      - server2
+  server1:
+    image: zxcv9203/open-api-spec-example
+    container_name: prod-server1
+    restart: always
+    expose:
+      - "8081"
+    volumes:
+      - ./:/home/ubuntu
+    environment:
+      PROFILE: set1
+    networks:
+      - backend
+  server2:
+    image: zxcv9203/open-api-spec-example
+    container_name: prod-server2
+    restart: always
+    expose:
+      - "8082"
+    volumes:
+      - ./:/home/ubuntu
+    environment:
+      PROFILE: set2
+    networks:
+      - backend

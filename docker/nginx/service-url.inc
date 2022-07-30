@@ -1,0 +1,1 @@
+set $service_url http://server1:8081;
