@@ -68,4 +68,9 @@ public class MainController {
     public ResponseEntity<String> getProfile() {
         return ResponseEntity.ok(profile);
     }
+
+    @GetMapping("/proper")
+    public ResponseEntity<String> getProper() {
+        return ResponseEntity.ok(profile);
+    }
 }
