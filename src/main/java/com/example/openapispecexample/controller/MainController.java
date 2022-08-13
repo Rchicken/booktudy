@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/user")
 public class MainController {
 
+    private final int n = 3;
     @Value("${spring.profiles.active:}")
     private String profile;
 

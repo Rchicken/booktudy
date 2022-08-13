@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3"
 
 networks:
   backend:
@@ -17,29 +17,29 @@ services:
     networks:
       - backend
     depends_on:
-      - server1
-      - server2
-  server1:
-    image: zxcv9203/open-api-spec-example
-    container_name: prod-server1
+      - checkmoi-1
+      - checkmoi-2
+  checkmoi-1:
+    image: zxcv9203/checkmoi
+    container_name: checkmoi-1
     restart: always
     expose:
-      - "8081"
+      - "8080"
     volumes:
       - ./:/home/ubuntu
     environment:
-      PROFILE: set1
+      PROFILE: prod
     networks:
       - backend
-  server2:
-    image: zxcv9203/open-api-spec-example
-    container_name: prod-server2
+  checkmoi-2:
+    image: zxcv9203/checkmoi
+    container_name: checkmoi-2
     restart: always
     expose:
-      - "8082"
+      - "8080"
     volumes:
       - ./:/home/ubuntu
     environment:
-      PROFILE: set2
+      PROFILE: prod
     networks:
       - backend

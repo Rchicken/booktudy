@@ -183,7 +183,7 @@ class MainControllerTest {
             .andExpect(status().isNoContent())
             .andDo(MockMvcRestDocumentationWrapper.document("test-delete",
                 ResourceSnippetParameters.builder()
-                    .tag("테스트")
+                    .tag("StudyAPI")
                     .summary("Delete 테스트")
                     .description("Delete 테스트")
                 ,

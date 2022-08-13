@@ -1,0 +1,47 @@
+version: "3"
+
+networks:
+  backend:
+    driver: bridge
+
+services:
+  web-server:
+    image: zxcv9203/nginx-dev
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d/
+    networks:
+      - backend
+    depends_on:
+      - checkmoi
+  checkmoi:
+    image: zxcv9203/checkmoi
+    container_name: checkmoi
+    restart: always
+    expose:
+      - "8080"
+    volumes:
+      - ./:/home/ubuntu
+    environment:
+      PROFILE: dev
+    networks:
+      - backend
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql
+    container_name: db
+    restart: always
+    expose:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: checkmoi
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - backend
